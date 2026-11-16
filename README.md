@@ -87,7 +87,6 @@ Run all commands from the project root directory:
 ├── run_demo.py                      # Single-command integrated demo script
 ├── requirements.txt                 # Pinned Python dependencies
 ├── .gitignore                       # Git ignore rules
-├── LICENSE                          # MIT License
 └── README.md                        # Setup, commands, assumptions, results summary, and glossary
 ```
 
