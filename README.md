@@ -5,13 +5,13 @@ This project solves the weekly **Warehouse Re-Slotting** problem on the **UCI On
 1. **Forecasts** next-week units sold per product using a 2-layer Multi-Layer Perceptron (`nn/demand_model.py`) and compares it against **Last-Week** and **4-Week Moving Average** baselines.
 2. **Constructs** a valid initial shelf layout using a switchable **Constraint Satisfaction Problem (CSP)** solver (`csp/warehouse_csp.py` supporting **Backtracking**, **Forward Checking**, and **AC-3**), placing high-demand items near the packing depot while obeying capacity, ground-level heavy shelf, co-purchase distance, and aisle-incompatibility rules (with automatic step-by-step distance relaxation when needed).
 3. **Refines** the layout using **Heuristic Swap Search** (`search/swap_search.py` supporting **Greedy Best-First Search**, **Bounded UCS**, and an **A\* Variant**) over pairwise swaps among the 30 highest-demand products and near-depot slots, rechecking every swap with the CSP verifier.
-4. **Simulates** a human warehouse picker walking through aisles to fulfill **4,318 real held-out customer invoices** over 10 test weeks (`integration/simulator.py`), with both terminal output and an interactive **Tkinter GUI** (`gui_app.py`).
+4. **Simulates** a human warehouse picker walking through aisles to fulfill **4,318 real held-out customer invoices** over 10 test weeks (`integration/simulator.py`).
 
 ---
 
 ## 1. Environment Setup & Pinned Requirements
 
-Only 5 external Python libraries are required (plus Python's built-in `tkinter` for the GUI), all pinned in [requirements.txt](file:///d:/Projects/Intelligent%20Systems/requirements.txt):
+Only 5 external Python libraries are required, all pinned in [requirements.txt](file:///d:/Projects/Intelligent%20Systems/requirements.txt):
 
 ```powershell
 # 1. Create and activate a virtual environment (Windows PowerShell)
@@ -46,11 +46,8 @@ Run all commands from the project root directory:
 # Step 3: Run the 3 multi-seed experiments (5 seeds: 42..46) and save tables/plots to results/
 .\.venv\Scripts\python.exe eval/run_experiments.py
 
-# Step 4: Run the 5-minute live demo AND open the interactive Tkinter GUI window
+# Step 4: Run the 5-minute live demo (prints full trace and saves results/demo_cooperation.png)
 .\.venv\Scripts\python.exe run_demo.py
-
-# Optional: Run the live demo in terminal-only mode (without opening the GUI window)
-.\.venv\Scripts\python.exe run_demo.py --no-gui
 ```
 
 ---
@@ -87,8 +84,7 @@ Run all commands from the project root directory:
 │   ├── presentation_outline.md      # 10-minute presentation slide outline
 │   ├── demo_script.md               # 5-minute live demo script
 │   └── contribution_statement_template.md # Individual contribution template + git log instructions
-├── gui_app.py                       # Built-in Tkinter GUI (traces, visual warehouse map, plots, tests)
-├── run_demo.py                      # Single-command integrated demo launcher
+├── run_demo.py                      # Single-command integrated demo script
 ├── requirements.txt                 # Pinned Python dependencies
 ├── .gitignore                       # Git ignore rules
 ├── LICENSE                          # MIT License
@@ -145,5 +141,3 @@ Where the project specification left room for parameter choices, we chose the si
 - **Greedy Best-First Search**: A search algorithm that always expands whichever neighbor layout has the lowest heuristic walking distance right now. *Analogy*: Always taking the steepest downhill step at every crossroads.
 - **UCS (Uniform Cost Search)**: A search algorithm that ignores the heuristic and explores layouts strictly in order of how many swaps ($g(n)$) have been made (`1 swap`, then `2 swaps`, etc.). *Analogy*: Checking every possible 1-swap change before checking any 2-swap change.
 - **A\* Search**: A search algorithm that combines the cost spent so far ($g(n)$, number of swaps) plus the heuristic estimate of remaining effort ($h(n)$) as $f(n) = g(n) + h(n)$, balancing fewer swaps against lower walking distance.
-#   W a r e h o u s e - R e s l o t t i n g  
- 
