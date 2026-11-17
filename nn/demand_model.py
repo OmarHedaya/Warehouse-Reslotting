@@ -126,7 +126,6 @@ def predict_with_nn(model, scaler, X):
 
 
 # Calculate Mean Absolute Error (MAE) and Root Mean Squared Error (RMSE) in plain loops
-# so a student can explain the exact error formulas during the oral defense.
 def calculate_error_metrics(true_units, predicted_units):
     n = len(true_units)
     if n == 0:
